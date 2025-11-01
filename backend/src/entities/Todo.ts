@@ -10,9 +10,6 @@ export class Todo {
     title: string;
 
     @Column()
-    text: string;
-
-    @Column()
     status: string;
 
     @Column()
@@ -21,6 +18,6 @@ export class Todo {
     @ManyToOne(() => User, user => user.todos)
     user: User;
 
-    @Column()
+    @Column('objectId')
     userId: ObjectId;
 }

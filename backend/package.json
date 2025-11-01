@@ -19,7 +19,8 @@
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "dev": "tsc --watch",
     "typeorm": "typeorm-ts-node-commonjs",
-    "test:e2e": "jest --config ./test/jest-e2e.json"
+    "test:e2e": "jest --config ./test/jest-e2e.json",
+    "remove-text-field": "ts-node src/scripts/remove-text-field.ts"
   },
   "dependencies": {
     "@nestjs/common": "^11.0.1",
