@@ -1,14 +1,12 @@
 import { DataSource } from "typeorm";
+import { User } from "../entities/User";
+import { Todo } from "../entities/Todo";
 
-import {User} from "../entities/user.entity";
-import { Todo } from "../entities/todo.entity";
-eeport const AppDataSource = new DataSource({
-    type: "postgres",
-    host: process.env.DB_HOST,
-    port: parseInt(process.env.DB_PORT),
-    username: process.env.DB_USERNAME,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_NAME,
+export const AppDataSource = new DataSource({
+    type: "mongodb",
+    url: process.env.MONGODB_URL || "mongodb://localhost:27017",
+    database: process.env.MONGODB_DATABASE || "todo_app",
     entities: [User, Todo],
-    synchronize: true,
+    synchronize: true, // для разработки
+    logging: true,
 });
