@@ -1,0 +1,10 @@
+Встроенные исключения:
+throw new BadRequestException();        // 400
+throw new UnauthorizedException();      // 401
+throw new ForbiddenException();         // 403
+throw new NotFoundException();          // 404
+throw new ConflictException();          // 409
+throw new InternalServerErrorException(); // 500
+
+
+
