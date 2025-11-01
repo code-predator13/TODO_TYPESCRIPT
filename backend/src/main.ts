@@ -1,5 +1,6 @@
 import { NestFactory } from '@nestjs/core';
-import { AppModule } from './app.module';
+import { AppModule } from './app.module.js';
+import { ValidationPipe } from '@nestjs/common';
 
 import 'reflect-metadata';
 import { AppDataSource } from './config/data-source';
@@ -7,15 +8,16 @@ import { AppDataSource } from './config/data-source';
 async function bootstrap() {
   try {
     await AppDataSource.initialize();
-    console.log('✅ С БД приконнектились');
-
     const app = await NestFactory.create(AppModule);
+
+    app.setGlobalPrefix('api');
+    app.useGlobalPipes(new ValidationPipe());
     await app.listen(process.env.PORT ?? 3000);
 
-    console.log(`\x1b[35;4m  🚀 сервак запустился ! \x1b[0m`);
   } catch (error) {
-    console.error('❌ Что то пошло не так с самого начала:', error);
-    process.exit(1);
   }
+
+  await app.listen(process.env["PORT"] ?? 3001);
 }
+
 bootstrap();
