@@ -1,0 +1,75 @@
+{
+  // Максимально строгий TypeScript для NestJS с ESM
+  "compilerOptions": {
+    // === Module System (ESM) ===
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
+    "resolvePackageJsonExports": true,
+    "target": "ES2023",
+    "lib": ["ES2023"],
+
+    // === Paths ===
+    "rootDir": "./src",
+    "outDir": "./dist",
+    "baseUrl": "./",
+
+    // === Module Features ===
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+
+    // === КРИТИЧНО для NestJS - Декораторы ===
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+
+    // === Output ===
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true,
+    "removeComments": true,
+    "incremental": true,
+    "newLine": "lf",
+
+    // === Strict Type-Checking (максимум!) ===
+    "strict": true,                              // включает все нижеперечисленные
+    "noImplicitAny": true,                       // запрет неявного any
+    "strictNullChecks": true,                    // строгие проверки null/undefined
+    "strictFunctionTypes": true,                 // строгая типизация функций
+    "strictBindCallApply": true,                 // строгий bind/call/apply
+    "strictPropertyInitialization": true,        // проверка инициализации свойств классов
+    "noImplicitThis": true,                      // запрет неявного this
+    "alwaysStrict": true,                        // всегда "use strict"
+    "useUnknownInCatchVariables": true,          // catch (e: unknown) вместо any
+
+    // === Additional Checks (еще больше строгости!) ===
+    "noUnusedLocals": true,                      // ошибка при неиспользуемых переменных
+    "noUnusedParameters": true,                  // ошибка при неиспользуемых параметрах
+    "noImplicitReturns": true,                   // все пути функции должны возвращать значение
+    "noFallthroughCasesInSwitch": true,          // запрет fallthrough в switch
+    "noUncheckedIndexedAccess": true,            // строгий доступ к массивам/объектам
+    "noImplicitOverride": true,                  // явный override в классах
+    "noPropertyAccessFromIndexSignature": true,  // строгий доступ к свойствам
+    "allowUnusedLabels": false,                  // ошибка при неиспользуемых метках
+    "allowUnreachableCode": false,               // ошибка при недостижимом коде
+    "exactOptionalPropertyTypes": true,          // строгие опциональные свойства
+
+    // === Advanced ===
+    "skipLibCheck": true,                        // пропуск проверки .d.ts для скорости
+    "forceConsistentCasingInFileNames": true,    // одинаковый регистр в импортах
+    "moduleDetection": "force",                  // всегда считать файлы модулями
+    "preserveConstEnums": true,                  // не удалять const enum в runtime
+    "importHelpers": false,                      // не использовать tslib (для простоты)
+    "noEmitOnError": true                        // не создавать .js при ошибках
+  },
+
+  // === Include/Exclude ===
+  "include": ["src/**/*"],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "test",
+    "**/*spec.ts",
+    "**/*.test.ts"
+  ]
+}
