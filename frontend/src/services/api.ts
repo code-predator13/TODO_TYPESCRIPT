@@ -12,11 +12,11 @@ const api = ky.create({
 
 export const todoAPI = {
   getAll: async(): Promise<Todo[]> => {
-    return await api.get('').json<Todo[]>()
+    return await api.get('/todo').json<Todo[]>()
   },
-  
+
   create: async (title: string): Promise<Todo> => {
-    return await api.post('', {
+    return await api.post('/todo', {
       json: { title }
     }).json<Todo>()
   },

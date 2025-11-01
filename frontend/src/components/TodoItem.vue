@@ -12,14 +12,14 @@
 </script>
 
 <template>
-  <div class="todo-item" :class="{ completed: todo.completed }">
+  <div class="todo-item" :class="{ completed: todo.status }">
     <input
       type="checkbox"
-      :checked="todo.completed"
-      @change="todoStore.toggleTodo(todo.id)"
+      :checked="todo.status"
+      @change="todoStore.toggleTodo(todo._id)"
     />
     <span class="todo-title">{{ todo.title }}</span>
-    <button @click="todoStore.deleteTodo(todo.id)" class="delete-button">
+    <button @click="todoStore.deleteTodo(todo._id)" class="delete-button">
       Удалить
     </button>
   </div>

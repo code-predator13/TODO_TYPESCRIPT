@@ -1,5 +1,6 @@
 import { defineStore } from "pinia";
 import type { Todo } from "@/types/todo";
+import {todoAPI} from "@/services/api.ts";
 
 
 export const useTodoStore = defineStore('todo', {
@@ -9,29 +10,34 @@ export const useTodoStore = defineStore('todo', {
   }),
 
   getters: {
-    activeTodos: (state) => state.todos.filter(todo => !todo.completed),
-    completedTodos: (state) => state.todos.filter(todo => todo.completed),
+    activeTodos: (state) => state.todos.filter(todo => !todo.status),
+    completedTodos: (state) => state.todos.filter(todo => todo.status),
   },
 
   actions: {
+
+    async fetchTodos() {
+      this.todos = await todoAPI.getAll();
+    },
+
     addTodo(title: string) {
       this.todos.push({
-        id: this.nextId++,
+        _id: this.nextId++,
         title,
-        completed: false,
-        createdAt: new Date(),
+        status: false,
+        dataCreate: new Date(),
       });
     },
 
     toggleTodo(id: number) {
-      const todo = this.todos.find(t => t.id === id);
+      const todo = this.todos.find(t => t._id === id);
       if (todo) {
-        todo.completed = !todo.completed;
+        todo.status = !todo.status;
       }
     },
 
     deleteTodo(id: number) {
-      const index = this.todos.findIndex(t => t.id === id);
+      const index = this.todos.findIndex(t => t._id === id);
       if (index > -1) {
         this.todos.splice(index, 1);
       }
