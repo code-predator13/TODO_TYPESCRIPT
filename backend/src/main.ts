@@ -3,22 +3,24 @@ import { AppModule } from './app.module.js';
 import { ValidationPipe } from '@nestjs/common';
 
 import 'reflect-metadata';
-import { AppDataSource } from './config/data-source';
+// import { AppDataSource } from './config/data-source.js';
 
 async function bootstrap() {
-  try {
-    await AppDataSource.initialize();
-    const app = await NestFactory.create(AppModule);
+  // TODO: Подключить TypeORM когда MongoDB будет запущен
+  // try {
+  //   await AppDataSource.initialize();
+  //   console.log('Database connected successfully');
+  // } catch (error) {
+  //   console.error('Database connection failed:', error);
+  //   process.exit(1);
+  // }
 
-    app.setGlobalPrefix('api');
-    app.useGlobalPipes(new ValidationPipe());
-    await app.listen(process.env.PORT ?? 3000);
-    await app.listen(process.env["PORT"] ?? 3001);
+  const app = await NestFactory.create(AppModule);
 
-  } catch (error) {
-
-  }
-
+  app.setGlobalPrefix('api');
+  app.useGlobalPipes(new ValidationPipe());
+  await app.listen(process.env["PORT"] ?? 3001);
+  console.log(`Application is running on: http://localhost:3001/api`);
 }
 
 bootstrap();

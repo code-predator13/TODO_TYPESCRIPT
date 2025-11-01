@@ -1,20 +1,20 @@
 import { Entity, ObjectIdColumn, ObjectId, Column, OneToMany } from 'typeorm';
-import { Todo } from './Todo';
+import type { Todo } from './Todo.js';
 
 @Entity('users')
 export class User {
     @ObjectIdColumn()
-    _id: ObjectId;
+    _id!: ObjectId;
 
     @Column()
-    login: string;
+    login!: string;
 
     @Column()
-    email: string;
+    email!: string;
 
     @Column()
-    password: string;
+    password!: string;
 
-    @OneToMany(() => Todo, todo => todo.user)
-    todos: Todo[];
+    @OneToMany('Todo', 'user')
+    todos!: Todo[];
 }
