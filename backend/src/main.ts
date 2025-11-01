@@ -5,7 +5,7 @@ import { ValidationPipe } from '@nestjs/common';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
-  app.setGlobalPrefix('api');  // ← все роуты будут начинаться с /api
+  app.setGlobalPrefix('api');
   app.useGlobalPipes(new ValidationPipe());
 
   await app.listen(process.env["PORT"] ?? 3001);
