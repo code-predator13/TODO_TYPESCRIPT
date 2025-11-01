@@ -1,26 +1,28 @@
 import {Injectable, NotFoundException} from "@nestjs/common";
 import {CreateTodoDto} from "./dto/create-todo.dto.js";
 
+
+
 @Injectable()
 export class TodoService {
     private readonly todo: Todo[] = [
         {
             _id: 1,
             title: 'заметка 1',
-            text: 'текст 1',
-            dataCreate: '24.04.14'
+            status: true,
+            dataCreate: 'new Date()'
         },
         {
             _id: 2,
             title: 'заметка 2',
-            text: 'текст 2',
-            dataCreate: '24.04.14'
+            status: true,
+            dataCreate: 'new Date()'
         },
         {
             _id: 3,
             title: 'заметка 3',
-            text: 'текст 3',
-            dataCreate: '24.04.14'
+            status: true,
+            dataCreate: 'new Date()'
         }
     ];
 
@@ -55,7 +57,7 @@ export class TodoService {
 export interface Todo {
     _id: number,
     title: string,
-    text: string,
+    status: boolean,
     dataCreate: string
 }
 

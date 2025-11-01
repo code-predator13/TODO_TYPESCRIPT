@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsString, MinLength } from "class-validator";
+import {IsBoolean, IsDate, IsNotEmpty, IsString, MinLength} from "class-validator";
 
 export class CreateTodoDto {
     @IsString()
@@ -6,9 +6,8 @@ export class CreateTodoDto {
     @MinLength(3, { message: 'Title должен быть минимум 3 символа' })
     title!: string;
 
-    @IsString()
-    @IsNotEmpty({ message: 'text не может быть пустым' })
-    text!: string;
+    @IsBoolean()
+    status!: boolean
 
     @IsString()
     dataCreate!: string;

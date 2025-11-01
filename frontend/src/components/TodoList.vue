@@ -13,7 +13,7 @@
     <TodoItem
       v-else
       v-for="todo in todoStore.todos"
-      :key="todo.id"
+      :key="todo._id"
       :todo="todo"
     />
   </div>
