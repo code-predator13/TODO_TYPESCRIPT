@@ -1,10 +1,9 @@
 {
   // Максимально строгий TypeScript для NestJS с ESM
   "compilerOptions": {
-    // === Module System (ESM) ===
-    "module": "nodenext",
-    "moduleResolution": "nodenext",
-    "resolvePackageJsonExports": true,
+    // === Module System (ESM современный) ===
+    "module": "ESNext",
+    "moduleResolution": "bundler",
     "target": "ES2023",
     "lib": ["ES2023"],
 
