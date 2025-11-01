@@ -1,18 +1,20 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { AppDataSource } from './entities/data-source';
+
 import 'reflect-metadata';
 import { AppDataSource } from './config/data-source';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
-  await app.listen(process.env.PORT ?? 3000);
   try {
-    // Инициализация подключения к БД
+ 
     await AppDataSource.initialize();
     console.log('✅ Database connected successfully');
     
-    console.log('🚀 Server started');
+   
+    const app = await NestFactory.create(AppModule);
+    await app.listen(process.env.PORT ?? 3000);
+    
+    console.log(`\x1b[35;4m  🚀 Server is running ! \x1b[0m`);
   } catch (error) {
     console.error('❌ Error during server startup:', error);
     process.exit(1);
