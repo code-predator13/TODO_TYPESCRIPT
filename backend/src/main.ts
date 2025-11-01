@@ -6,11 +6,9 @@ import { AppDataSource } from './config/data-source';
 
 async function bootstrap() {
   try {
- 
     await AppDataSource.initialize();
     console.log('✅ Database connected successfully');
     
-   
     const app = await NestFactory.create(AppModule);
     await app.listen(process.env.PORT ?? 3000);
     
