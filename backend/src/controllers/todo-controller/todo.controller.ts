@@ -1,4 +1,4 @@
-import {Body, Controller, Get, Param, ParseIntPipe, Post} from "@nestjs/common";
+import {Body, Controller, Get, Param, ParseIntPipe, Post, Patch, Delete} from "@nestjs/common";
 import {TodoService} from "./todo.service.js";
 import {CreateTodoDto} from "./dto/create-todo.dto.js";
 
@@ -20,6 +20,16 @@ export class TodoController {
     @Post()
     createToDo(@Body() body: CreateTodoDto) {
         return this.todoService.create(body)
+    }
+
+    @Patch(':id/toggle')
+    toggleToDo(@Param('id', ParseIntPipe) id: number) {
+        return this.todoService.toggle(id)
+    }
+
+    @Delete(':id')
+    deleteToDo(@Param('id', ParseIntPipe) id: number) {
+        return this.todoService.delete(id)
     }
 
 }

@@ -1,4 +1,4 @@
-import {IsBoolean, IsDate, IsNotEmpty, IsString, MinLength} from "class-validator";
+import {IsBoolean, IsOptional, IsDate, IsNotEmpty, IsString, MinLength} from "class-validator";
 
 export class CreateTodoDto {
     @IsString()
@@ -7,8 +7,10 @@ export class CreateTodoDto {
     title!: string;
 
     @IsBoolean()
-    status!: boolean
+    @IsOptional() 
+    status?: boolean;
 
     @IsString()
-    dataCreate!: string;
+    @IsOptional() 
+    dataCreate?: string;
 }

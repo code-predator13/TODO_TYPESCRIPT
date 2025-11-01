@@ -1,8 +1,6 @@
 import {Injectable, NotFoundException} from "@nestjs/common";
 import {CreateTodoDto} from "./dto/create-todo.dto.js";
 
-
-
 @Injectable()
 export class TodoService {
     private readonly todo: Todo[] = [
@@ -26,16 +24,16 @@ export class TodoService {
         }
     ];
 
-
     create(createToDo: CreateTodoDto) {
-        const newTodo: Todo = {
+    const newTodo: Todo = {
             _id: this.todo.length + 1,
-            ...createToDo
+            title: createToDo.title,
+            status: createToDo.status !== undefined ? createToDo.status : false,
+            dataCreate: createToDo.dataCreate || new Date().toISOString()
         }
 
         this.todo.push(newTodo)
-
-        return this.todo
+        return newTodo
     }
 
     findAll(): Todo[] {
@@ -52,6 +50,27 @@ export class TodoService {
         return todo
     }
 
+    toggle(id: number): Todo {
+        const todo = this.todo.find(element => element._id === id)
+
+        if(!todo) {
+            throw new NotFoundException(`не найдена заметка с id ${id}`)
+        }
+
+        todo.status = !todo.status
+
+        return todo
+    }
+
+    delete(id: number): void {
+        const index = this.todo.findIndex(element => element._id === id)
+
+        if(index === -1) {
+            throw new NotFoundException(`не найдена заметка с id ${id}`)
+        }
+
+        this.todo.splice(index, 1)
+    }
 }
 
 export interface Todo {
@@ -60,4 +79,3 @@ export interface Todo {
     status: boolean,
     dataCreate: string
 }
-
