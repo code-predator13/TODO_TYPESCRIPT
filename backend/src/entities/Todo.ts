@@ -1,23 +1,22 @@
 import { Entity, ObjectIdColumn, ObjectId, Column, ManyToOne } from 'typeorm';
-import type { User } from './User.js';
 
 @Entity('todos')
 export class Todo {
-    @ObjectIdColumn()
-    _id!: ObjectId;
+  @ObjectIdColumn()
+  _id!: ObjectId;
 
-    @Column()
-    title!: string;
+  @Column()
+  title!: string;
 
-    @Column()
-    status!: string;
+  @Column()
+  status!: string;
 
-    @Column()
-    dataCreate!: Date;
+  @Column()
+  dataCreate!: Date;
 
-    @ManyToOne('User', 'todos')
-    user!: User;
+  @ManyToOne('User', 'todos')
+  user!: any;
 
-    @Column('objectId')
-    userId!: ObjectId;
+  @Column('objectId')
+  userId!: ObjectId;
 }

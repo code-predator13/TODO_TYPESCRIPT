@@ -10,8 +10,8 @@ export const useTodoStore = defineStore('todo', {
   }),
 
   getters: {
-    activeTodos: (state) => state.todos.filter(todo => !todo.status),
-    completedTodos: (state) => state.todos.filter(todo => todo.status),
+    activeTodos: (state) => state.todos.filter(todo => todo.status !== 'completed'),
+    completedTodos: (state) => state.todos.filter(todo => todo.status === 'completed'),
   },
 
   actions: {
@@ -38,12 +38,16 @@ export const useTodoStore = defineStore('todo', {
       }
     },
 
-    async toggleTodo(id: number) {
+    async toggleTodo(id: string) {
       try {
-        const updatedTodo = await todoAPI.toggle(id);
-        const index = this.todos.findIndex(t => t._id === id);
-        if (index !== -1) {
-          this.todos[index] = updatedTodo;
+        const todo = this.todos.find(t => t._id === id);
+        if (todo) {
+          const newStatus = todo.status === 'completed' ? 'active' : 'completed';
+          const updatedTodo = await todoAPI.update(id, { status: newStatus });
+          const index = this.todos.findIndex(t => t._id === id);
+          if (index !== -1) {
+            this.todos[index] = updatedTodo;
+          }
         }
       } catch (err) {
         this.error = 'Ошибка обновления задачи';
@@ -51,7 +55,7 @@ export const useTodoStore = defineStore('todo', {
       }
     },
 
-    async deleteTodo(id: number) {
+    async deleteTodo(id: string) {
       try {
         await todoAPI.delete(id);
         const index = this.todos.findIndex(t => t._id === id);

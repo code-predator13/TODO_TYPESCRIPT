@@ -12,10 +12,10 @@
 </script>
 
 <template>
-  <div class="todo-item" :class="{ completed: todo.status }">
+  <div class="todo-item" :class="{ completed: todo.status === 'completed' }">
     <input
       type="checkbox"
-      :checked="todo.status"
+      :checked="todo.status === 'completed'"
       @change="todoStore.toggleTodo(todo._id)"
     />
     <span class="todo-title">{{ todo.title }}</span>

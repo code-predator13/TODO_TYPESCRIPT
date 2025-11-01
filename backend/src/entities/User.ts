@@ -1,5 +1,4 @@
 import { Entity, ObjectIdColumn, ObjectId, Column, OneToMany } from 'typeorm';
-import type { Todo } from './Todo.js';
 
 @Entity('users')
 export class User {
@@ -16,5 +15,5 @@ export class User {
     password!: string;
 
     @OneToMany('Todo', 'user')
-    todos!: Todo[];
+    todos!: any[];
 }

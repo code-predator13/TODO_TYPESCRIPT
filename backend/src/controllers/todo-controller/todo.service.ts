@@ -1,63 +1,62 @@
-import {Injectable, NotFoundException} from "@nestjs/common";
-import {CreateTodoDto} from "./dto/create-todo.dto.js";
-
-
+import { Injectable, NotFoundException } from "@nestjs/common";
+import { AppDataSource } from "../../config/data-source";
+import { Todo } from "../../entities/Todo";
+import { CreateTodoDto } from "./dto/create-todo.dto";
+import { ObjectId } from "mongodb";
 
 @Injectable()
 export class TodoService {
-    private readonly todo: Todo[] = [
-        {
-            _id: 1,
-            title: 'заметка 1',
-            status: true,
-            dataCreate: 'new Date()'
-        },
-        {
-            _id: 2,
-            title: 'заметка 2',
-            status: true,
-            dataCreate: 'new Date()'
-        },
-        {
-            _id: 3,
-            title: 'заметка 3',
-            status: true,
-            dataCreate: 'new Date()'
-        }
-    ];
+  async create(createTodoDto: CreateTodoDto, userId?: string): Promise<Todo> {
+    const todoRepository = AppDataSource.getMongoRepository(Todo);
+    
+    const todo = todoRepository.create({
+      title: createTodoDto.title,
+      status: createTodoDto.status || 'active',
+      dataCreate: new Date(),
+      userId: userId ? new ObjectId(userId) : undefined,
+    });
 
+    return await todoRepository.save(todo);
+  }
 
-    create(createToDo: CreateTodoDto) {
-        const newTodo: Todo = {
-            _id: this.todo.length + 1,
-            ...createToDo
-        }
+  async findAll(userId?: string): Promise<Todo[]> {
+    const todoRepository = AppDataSource.getMongoRepository(Todo);
+    
+    if (userId) {
+      return await todoRepository.findBy({ userId: new ObjectId(userId) });
+    }
+    
+    return await todoRepository.find();
+  }
 
-        this.todo.push(newTodo)
+  async findById(id: string): Promise<Todo> {
+    const todoRepository = AppDataSource.getMongoRepository(Todo);
+    
+    const todo = await todoRepository.findOneBy({ _id: new ObjectId(id) });
 
-        return this.todo
+    if (!todo) {
+      throw new NotFoundException(`Не найдена заметка с id ${id}`);
     }
 
-    findAll(): Todo[] {
-        return this.todo
-    }
+    return todo;
+  }
 
-    findById(id: number): Todo {
-        const todo = this.todo.find(element => element._id === id)
+  async update(id: string, updateData: Partial<CreateTodoDto>): Promise<Todo> {
+    const todoRepository = AppDataSource.getMongoRepository(Todo);
+    
+    const todo = await this.findById(id);
+    
+    Object.assign(todo, updateData);
+    
+    return await todoRepository.save(todo);
+  }
 
-        if(!todo) {
-            throw new NotFoundException(`не найдена заметка с id ${id}`)
-        }
-
-        return todo
-    }
-
-}
-
-export interface Todo {
-    _id: number,
-    title: string,
-    status: boolean,
-    dataCreate: string
+  async delete(id: string): Promise<void> {
+    const todoRepository = AppDataSource.getMongoRepository(Todo);
+    
+    const todo = await this.findById(id);
+    
+    await todoRepository.remove(todo);
+  }
 }
 

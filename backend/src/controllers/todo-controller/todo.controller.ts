@@ -1,26 +1,35 @@
-import {Body, Controller, Get, Param, ParseIntPipe, Post} from "@nestjs/common";
-import {TodoService} from "./todo.service.js";
-import {CreateTodoDto} from "./dto/create-todo.dto.js";
+import { Body, Controller, Delete, Get, Param, Post, Put, Query } from "@nestjs/common";
+import { TodoService } from "./todo.service";
+import { CreateTodoDto } from "./dto/create-todo.dto";
 
 @Controller('todo')
 export class TodoController {
+  constructor(private todoService: TodoService) {}
 
-    constructor(private todoService: TodoService) {}
+  @Get()
+  async getAllTodo(@Query('userId') userId?: string) {
+    return await this.todoService.findAll(userId);
+  }
 
-    @Get()
-    getAllToDo() {
-        return this.todoService.findAll()
-    }
+  @Get(':id')
+  async getTodoById(@Param('id') id: string) {
+    return await this.todoService.findById(id);
+  }
 
-    @Get(':id')
-    getToDoById(@Param('id', ParseIntPipe) id: number) {
-        return this.todoService.findById(+id)
-    }
+  @Post()
+  async createTodo(@Body() body: CreateTodoDto, @Query('userId') userId?: string) {
+    return await this.todoService.create(body, userId);
+  }
 
-    @Post()
-    createToDo(@Body() body: CreateTodoDto) {
-        return this.todoService.create(body)
-    }
+  @Put(':id')
+  async updateTodo(@Param('id') id: string, @Body() body: Partial<CreateTodoDto>) {
+    return await this.todoService.update(id, body);
+  }
 
+  @Delete(':id')
+  async deleteTodo(@Param('id') id: string) {
+    await this.todoService.delete(id);
+    return { message: 'Заметка успешно удалена' };
+  }
 }
 
