@@ -1,11 +1,44 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import TodoForm from './components/TodoForm.vue';
+import TodoList from './components/TodoList.vue';
+</script>
 
 <template>
-  <h1>You did it!</h1>
-  <p>
-    Visit <a href="https://vuejs.org/" target="_blank" rel="noopener">vuejs.org</a> to read the
-    documentation
-  </p>
+  <div id="app">
+    <header>
+      <h1>📝 Мои задачи</h1>
+    </header>
+    <main>
+      <TodoForm />
+      <TodoList />
+    </main>
+  </div>
 </template>
 
-<style scoped></style>
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f5f5f5;
+}
+
+#app {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+h1 {
+  color: #2c3e50;
+}
+</style>
