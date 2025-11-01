@@ -1,0 +1,22 @@
+{
+  "dbcode.connections": [
+    {
+      "connectionId": "3Jh3WT4cvxGdQ6TLZVp0B",
+      "name": "todo_app",
+      "driver": "mongodb",
+      "color": "#7655FF",
+      "connectionType": "host",
+      "driverOptions": {
+        "protocol": "mongodb://"
+      },
+      "host": "127.0.0.1",
+      "port": 27017,
+      "ssl": false,
+      "savePassword": "session",
+      "database": "admin",
+      "readOnly": false,
+      "role": "development",
+      "connectionTimeout": 30
+    }
+  ]
+}
